@@ -14,7 +14,7 @@
 <hr>
 <a href="https://imamuddinwp.github.io/imamuddin" target="_blank"> <img src="https://github.com/imamuddinwp/excel-vba-macros/blob/main/excel-macros-ss/excel-automation-imam-uddin-imamuddinwp.png"></a>
 <hr>
-<a href="https://imamuddinwp.github.io/imamuddin" target="_blank"> <img src="https://github.com/imamuddinwp/excel-vba-macros/blob/main/excel-macros-ss/excel-automation-imam-uddin-imamuddinwp.png"></a>
+<a href="https://imamuddinwp.github.io/imamuddin" target="_blank"> <img src="https://github.com/imamuddinwp/excel-vba-macros/blob/main/excel-macros-ss/imam-uddin-imamuddinwp-excel-code.png"></a>
 <hr>
 <a href="https://imamuddinwp.github.io/imamuddin" target="_blank"> <img src="https://github.com/imamuddinwp/excel-vba-macros/blob/main/excel-macros-ss/imam-uddin-imamuddinwp-gist-github.png"></a>
 <hr>
