@@ -1,0 +1,13 @@
+Sub Replace_PO2SEQ()
+
+' P Replace by 1 & - remove from cell
+
+    'Selection.CurrentRegion.Select
+    Selection.Replace What:="P", Replacement:="'1", LookAt:=xlPart, _
+        SearchOrder:=xlByRows, MatchCase:=False, SearchFormat:=False, _
+        ReplaceFormat:=False
+    Selection.Replace What:="-", Replacement:="", LookAt:=xlPart, _
+        SearchOrder:=xlByRows, MatchCase:=False, SearchFormat:=False, _
+        ReplaceFormat:=False
+End Sub
+

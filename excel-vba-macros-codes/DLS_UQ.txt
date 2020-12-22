@@ -1,0 +1,32 @@
+Sub DLS_UQ()
+'
+' Macro1 Macro
+'
+
+'
+    
+    Application.Run "PERSONAL.XLSB!DLS_Initial"
+    Application.Run "PERSONAL.XLSB!DLS_All_In_One"
+    Application.Run "PERSONAL.XLSB!DLS_FW20"
+    Application.Run "PERSONAL.XLSB!DLS_SS21"
+    Application.Run "PERSONAL.XLSB!DLS_FW21"
+    Application.Run "PERSONAL.XLSB!DLS_FW21_SUMMARY"
+    '---------------------------------------------
+    Sheets("FW21-SUMMARY").Move Before:=Sheets(1)
+    Sheets("FW-21").Move Before:=Sheets(2)
+    Sheets("SS-21").Move Before:=Sheets(3)
+    Sheets("ALL-IN-ONE").Move Before:=Sheets(5)
+    Sheets("FW21-SUMMARY").Select
+    '-----Save To Directory
+    ChDir "D:\ImAmUdDiN\Daily-Report"
+    ActiveWorkbook.SaveAs fileName:="D:\ImAmUdDiN\Daily-Report\DLS-" & Format(Now(), "DD-MMM-YYYY") & ".xlsx", FileFormat:=xlOpenXMLWorkbook, CreateBackup:=False
+    ActiveWorkbook.Save
+    'Delete raw file.
+    Dim strFile  As String: strFile = "C:\Users\m.imam\Downloads\SPLFM1001.csv"
+    If Len(Dir$(strFile)) > 0 Then Kill strFile
+    '----Successful Message
+    MsgBox prompt:="Congratulations, Operation Successfull !!!" & vbNewLine & "-------------------------" & vbNewLine & "proudLy powered by" & vbNewLine & "ImAmUdDiN" & vbNewLine & "https://about.me/imamuddinwp", _
+    Buttons:=vbInformation + vbMsgBoxHelpButton, _
+    Title:="Successful Message From ImAmUdDiN "
+    
+End Sub

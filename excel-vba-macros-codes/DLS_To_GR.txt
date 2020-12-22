@@ -1,0 +1,37 @@
+Sub DLS_To_GR()
+'
+' Macro1 Macro
+'
+
+    
+    Sheets("FW21-RAW").Visible = True
+    Sheets("FW21-RAW").Select
+    Columns("B:D").Select
+    Selection.Delete Shift:=xlToLeft
+    Columns("C:D").Select
+    Selection.Delete Shift:=xlToLeft
+    Columns("F:T").Select
+    Selection.Delete Shift:=xlToLeft
+    Columns("G:H").Select
+    Selection.Delete Shift:=xlToLeft
+    Columns("I:J").Select
+    Selection.Delete Shift:=xlToLeft
+    Columns("J:AG").Select
+    Selection.Delete Shift:=xlToLeft
+    Columns("M:P").Select
+    Selection.Delete Shift:=xlToLeft
+    Columns("P:Y").Select
+    Selection.Delete Shift:=xlToLeft
+    Columns("Q:AW").Select
+    Selection.Delete Shift:=xlToLeft
+    '-----------------------------------
+    Columns("J:J").Select
+    Selection.Replace What:="", Replacement:="TBA", LookAt:=xlPart, _
+        SearchOrder:=xlByRows, MatchCase:=False, SearchFormat:=False, _
+        ReplaceFormat:=False
+    Columns("A:P").Select
+    Selection.Columns.AutoFit
+    '-----------------------------------------
+    Cells.Select
+    Selection.Copy
+End Sub

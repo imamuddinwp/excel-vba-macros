@@ -1,0 +1,19 @@
+Sub Transpose_Paste()
+'
+' Macro1 Macro
+'
+
+'
+    Selection.SpecialCells(xlCellTypeVisible).Select
+    Selection.Copy
+    Workbooks.Add
+    Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
+        :=False, Transpose:=False
+    Application.CutCopyMode = False
+    Selection.Copy
+    Range("A2").Select
+    Selection.PasteSpecial Paste:=xlPasteAll, Operation:=xlNone, SkipBlanks:= _
+        False, Transpose:=True
+    Application.CutCopyMode = False
+    Selection.Copy
+End Sub

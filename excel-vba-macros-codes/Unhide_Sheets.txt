@@ -1,0 +1,16 @@
+Sub Unhide_Sheets()
+
+Dim ws As Worksheet
+
+    'The For-Next is a loop that loops through
+    'each sheet in the active workbook
+    
+    For Each ws In ActiveWorkbook.Worksheets
+        'Set the visible property of the sheet (ws)
+        'to visible (xlSheetVisible)
+        
+        ws.Visible = xlSheetVisible
+
+    Next ws
+
+End Sub

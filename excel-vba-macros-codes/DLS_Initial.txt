@@ -1,0 +1,120 @@
+Sub DLS_Initial()
+' Macro1 Macro
+            Dim ws_exist As Worksheet
+            On Error Resume Next
+            Set ws_exist = Sheets("SPLFM1001")
+            If Err.Number <> 0 Then
+                MsgBox "Please Check Sheet 'SPLFM1001' exist or not!!! Thanx :)"
+            Else
+            '====> All Process Start Here <======'
+                    Sheets("SPLFM1001").Select
+                    'Arranage Month
+                    Columns("BZ:BZ").EntireColumn.AutoFit
+                    Columns("CA:CA").Select
+                    Selection.Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
+                    Range("CA1").Select
+                    ActiveCell.FormulaR1C1 = "Test"
+                    Range("CA2").Select
+                    ActiveCell.FormulaR1C1 = "=LEFT(RC[-1],7)"
+                                    ' auto formula if new row added
+                                    Range("CA2").Select
+                                    ActiveCell.Offset(0, -1).Select
+                                    Selection.End(xlDown).Select
+                                    ActiveCell.Offset(0, 1).Select
+                                    Range(Selection, Selection.End(xlUp)).Select
+                                    Selection.FillDown
+                                    Selection.Copy
+                                    Range("BZ2").Select
+                                    Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
+                                        :=False, Transpose:=False
+                                    Columns("CA:CA").Select
+                                    Application.CutCopyMode = False
+                                    Selection.Delete Shift:=xlToLeft
+                                    Range("A2").Select
+                                                    'Merge Two column into one "Year/Plan"
+                                                    Columns("D:D").Select
+                                                    Selection.Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
+                                                    Range("D1").Select
+                                                    ActiveCell.FormulaR1C1 = "Plan/Year"
+                                                    Range("D2").Select
+                                                    ActiveCell.FormulaR1C1 = "=RC[-1]&"":""&RC[-2]"
+                                                    Range("D2").Select
+                                                    ActiveCell.Offset(0, -1).Select
+                                                    Selection.End(xlDown).Select
+                                                    ActiveCell.Offset(0, 1).Select
+                                                    Range(Selection, Selection.End(xlUp)).Select
+                                                    Selection.FillDown
+                                                    Selection.Copy
+            '-----------------------------------------
+            Range("D2").Select
+            Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
+                :=False, Transpose:=False
+            Columns("B:C").Select
+            Selection.Delete Shift:=xlToLeft
+            Range("A1").Select
+            'Style No Extract------------------
+            Columns("I:I").Select
+            Selection.Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
+            Range("I1").Select
+            ActiveCell.FormulaR1C1 = "Style Code"
+            Range("I2").Select
+            ActiveCell.FormulaR1C1 = "=RIGHT(RC[-1],LEN(RC[-1])-2)"
+            Range("I2").Select
+            ActiveCell.Offset(0, -1).Select
+            Selection.End(xlDown).Select
+            ActiveCell.Offset(0, 1).Select
+            Range(Selection, Selection.End(xlUp)).Select
+            Selection.FillDown
+            Range("A1").Select
+            '----------------------------------
+            'Data Filter FW20
+            Selection.AutoFilter
+            ActiveSheet.Range("$A$1:$CT$1000").AutoFilter Field:=2, Criteria1:="FW:2020"
+            ActiveSheet.UsedRange.SpecialCells(xlCellTypeVisible).Copy
+            '---------------
+            Sheets.Add.Name = "FW20-RAW"
+            Range("A1").Select
+            Selection.PasteSpecial Paste:=xlPasteAllUsingSourceTheme, Operation:=xlNone _
+                , SkipBlanks:=False, Transpose:=False
+            Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
+                :=False, Transpose:=False
+            Sheets("SPLFM1001").Select
+            Application.CutCopyMode = False
+            ActiveSheet.ShowAllData
+            Range("A1").Select
+            '----------------
+            'Data Filter SS21
+            Selection.AutoFilter
+            ActiveSheet.Range("$A$1:$CT$1000").AutoFilter Field:=2, Criteria1:="SS:2021"
+            ActiveSheet.UsedRange.SpecialCells(xlCellTypeVisible).Copy
+            '---------------
+            Sheets.Add.Name = "SS21-RAW"
+            Range("A1").Select
+            Selection.PasteSpecial Paste:=xlPasteAllUsingSourceTheme, Operation:=xlNone _
+                , SkipBlanks:=False, Transpose:=False
+            Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
+                :=False, Transpose:=False
+            Sheets("SPLFM1001").Select
+            Application.CutCopyMode = False
+            ActiveSheet.ShowAllData
+            Range("A1").Select
+            '----------------
+            
+            'Data Filter SS21
+            Selection.AutoFilter
+            ActiveSheet.Range("$A$1:$CT$1000").AutoFilter Field:=2, Criteria1:="FW:2021"
+            ActiveSheet.UsedRange.SpecialCells(xlCellTypeVisible).Copy
+            '---------------
+            Sheets.Add.Name = "FW21-RAW"
+            Range("A1").Select
+            Selection.PasteSpecial Paste:=xlPasteAllUsingSourceTheme, Operation:=xlNone _
+                , SkipBlanks:=False, Transpose:=False
+            Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
+                :=False, Transpose:=False
+            Sheets("SPLFM1001").Select
+            Application.CutCopyMode = False
+            ActiveSheet.ShowAllData
+            Range("A1").Select
+            '----------------
+        End If
+End Sub

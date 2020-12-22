@@ -1,0 +1,93 @@
+Sub Operatinal_Ratio_CaLc()
+'
+' Macro1 Macro
+'
+
+'
+    
+    
+    
+            Dim ws_exist As Worksheet
+            On Error Resume Next
+            Set ws_exist = Sheets("KSI-GMT")
+            If Err.Number <> 0 Then
+                MsgBox "Please Check Sheet 'KSI-GMT' exist or not!!! Thanx :)"
+            Else
+            '------------------------------------------------------
+                Selection.SpecialCells(xlCellTypeVisible).Select
+                Selection.Copy
+                Workbooks.Add
+                Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
+                    :=False, Transpose:=False
+                Application.CutCopyMode = False
+                Sheets.Add
+                ActiveWorkbook.PivotCaches.Create(SourceType:=xlDatabase, SourceData:= _
+                    "Sheet1!R1C1:R91C4", Version:=6).CreatePivotTable TableDestination:= _
+                    "Sheet2!R3C1", TableName:="PivotTable1", DefaultVersion:=6
+                Sheets("Sheet2").Select
+                Cells(3, 1).Select
+                With ActiveSheet.PivotTables("PivotTable1")
+                    .ColumnGrand = True
+                    .HasAutoFormat = True
+                    .DisplayErrorString = False
+                    .DisplayNullString = True
+                    .EnableDrilldown = True
+                    .ErrorString = ""
+                    .MergeLabels = False
+                    .NullString = ""
+                    .PageFieldOrder = 2
+                    .PageFieldWrapCount = 0
+                    .PreserveFormatting = True
+                    .RowGrand = True
+                    .SaveData = True
+                    .PrintTitles = False
+                    .RepeatItemsOnEachPrintedPage = True
+                    .TotalsAnnotation = False
+                    .CompactRowIndent = 1
+                    .InGridDropZones = False
+                    .DisplayFieldCaptions = True
+                    .DisplayMemberPropertyTooltips = False
+                    .DisplayContextTooltips = True
+                    .ShowDrillIndicators = True
+                    .PrintDrillIndicators = False
+                    .AllowMultipleFilters = False
+                    .SortUsingCustomLists = True
+                    .FieldListSortAscending = False
+                    .ShowValuesRow = False
+                    .CalculatedMembersInFilters = False
+                    .RowAxisLayout xlCompactRow
+                End With
+                With ActiveSheet.PivotTables("PivotTable1").PivotCache
+                    .RefreshOnFileOpen = False
+                    .MissingItemsLimit = xlMissingItemsDefault
+                End With
+                ActiveSheet.PivotTables("PivotTable1").RepeatAllLabels xlRepeatLabels
+                With ActiveSheet.PivotTables("PivotTable1").PivotFields("Line")
+                    .Orientation = xlRowField
+                    .Position = 1
+                End With
+                With ActiveSheet.PivotTables("PivotTable1").PivotFields("Style #")
+                    .Orientation = xlRowField
+                    .Position = 2
+                End With
+                ActiveSheet.PivotTables("PivotTable1").AddDataField ActiveSheet.PivotTables( _
+                    "PivotTable1").PivotFields("Target"), "Sum of Target", xlSum
+                ActiveSheet.PivotTables("PivotTable1").AddDataField ActiveSheet.PivotTables( _
+                    "PivotTable1").PivotFields("Acvd"), "Sum of Acvd", xlSum
+                With ActiveSheet.PivotTables("PivotTable1")
+                    .InGridDropZones = True
+                    .RowAxisLayout xlTabularRow
+                End With
+                ActiveSheet.PivotTables("PivotTable1").PivotFields("Line").Subtotals = Array( _
+                    False, False, False, False, False, False, False, False, False, False, False, False)
+                ActiveSheet.PivotTables("PivotTable1").PivotFields("Style #").Subtotals = Array _
+                    (False, False, False, False, False, False, False, False, False, False, False, False)
+                ActiveSheet.PivotTables("PivotTable1").PivotFields("Target").Subtotals = Array( _
+                    False, False, False, False, False, False, False, False, False, False, False, False)
+                ActiveSheet.PivotTables("PivotTable1").PivotFields("Acvd").Subtotals = Array( _
+                    False, False, False, False, False, False, False, False, False, False, False, False)
+                ActiveSheet.PivotTables("PivotTable1").RepeatAllLabels xlRepeatLabels
+                Range("A5:B5").Select
+            '-----------------------
+        End If
+End Sub

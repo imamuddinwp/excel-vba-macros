@@ -1,0 +1,520 @@
+Sub DLS_All_In_One()
+'
+' Allpy this after DLS Initial Macro
+'
+
+'
+            Sheets("SPLFM1001").Select
+            Selection.AutoFilter
+            Cells.Select
+            Sheets.Add
+            ActiveWorkbook.PivotCaches.Create(SourceType:=xlDatabase, SourceData:= _
+                "SPLFM1001!R1C1:R1048576C98", Version:=6).CreatePivotTable TableDestination _
+                :="Sheet4!R3C1", TableName:="PivotTable1", DefaultVersion:=6
+            Sheets("Sheet4").Select
+            Cells(3, 1).Select
+            With ActiveSheet.PivotTables("PivotTable1")
+                .ColumnGrand = True
+                .HasAutoFormat = True
+                .DisplayErrorString = False
+                .DisplayNullString = True
+                .EnableDrilldown = True
+                .ErrorString = ""
+                .MergeLabels = False
+                .NullString = ""
+                .PageFieldOrder = 2
+                .PageFieldWrapCount = 0
+                .PreserveFormatting = True
+                .RowGrand = True
+                .SaveData = True
+                .PrintTitles = False
+                .RepeatItemsOnEachPrintedPage = True
+                .TotalsAnnotation = False
+                .CompactRowIndent = 1
+                .InGridDropZones = False
+                .DisplayFieldCaptions = True
+                .DisplayMemberPropertyTooltips = False
+                .DisplayContextTooltips = True
+                .ShowDrillIndicators = True
+                .PrintDrillIndicators = False
+                .AllowMultipleFilters = False
+                .SortUsingCustomLists = True
+                .FieldListSortAscending = False
+                .ShowValuesRow = False
+                .CalculatedMembersInFilters = False
+                .RowAxisLayout xlCompactRow
+            End With
+            With ActiveSheet.PivotTables("PivotTable1").PivotCache
+                .RefreshOnFileOpen = False
+                .MissingItemsLimit = xlMissingItemsDefault
+            End With
+            ActiveSheet.PivotTables("PivotTable1").RepeatAllLabels xlRepeatLabels
+            Sheets("Sheet4").Select
+            Sheets("Sheet4").Name = "ALL-IN-ONE"
+            Range("A3").Select
+            With ActiveSheet.PivotTables("PivotTable1")
+                .InGridDropZones = True
+                .RowAxisLayout xlTabularRow
+            End With
+            '------------
+            With ActiveSheet.PivotTables("PivotTable1").PivotFields("Display Month WK")
+            .Orientation = xlRowField
+            .Position = 1
+            End With
+            With ActiveSheet.PivotTables("PivotTable1").PivotFields("Plan/Year")
+                .Orientation = xlRowField
+                .Position = 2
+            End With
+            With ActiveSheet.PivotTables("PivotTable1").PivotFields("Main Sample Name")
+                .Orientation = xlRowField
+                .Position = 3
+            End With
+            With ActiveSheet.PivotTables("PivotTable1").PivotFields("Main Sample Code")
+                .Orientation = xlRowField
+                .Position = 4
+            End With
+            With ActiveSheet.PivotTables("PivotTable1").PivotFields("PO Order NO")
+                .Orientation = xlRowField
+                .Position = 5
+            End With
+            With ActiveSheet.PivotTables("PivotTable1").PivotFields("Production Plan ID")
+                .Orientation = xlRowField
+                .Position = 6
+            End With
+            With ActiveSheet.PivotTables("PivotTable1").PivotFields("Business Unit")
+                .Orientation = xlRowField
+                .Position = 7
+            End With
+            With ActiveSheet.PivotTables("PivotTable1").PivotFields( _
+                "Production Plan Type Name")
+                .Orientation = xlRowField
+                .Position = 8
+            End With
+            With ActiveSheet.PivotTables("PivotTable1").PivotFields("Contracted Date")
+                .Orientation = xlRowField
+                .Position = 9
+            End With
+            With ActiveSheet.PivotTables("PivotTable1").PivotFields("Requested Wh Date")
+                .Orientation = xlRowField
+                .Position = 10
+            End With
+            ActiveSheet.PivotTables("PivotTable1").AddDataField ActiveSheet.PivotTables( _
+                "PivotTable1").PivotFields("Order Qty Pcs"), "Sum of Order Qty Pcs", xlSum
+            ActiveSheet.PivotTables("PivotTable1").AddDataField ActiveSheet.PivotTables( _
+                "PivotTable1").PivotFields("Fabric Actual Order Qty Pcs"), _
+                "Sum of Fabric Actual Order Qty Pcs", xlSum
+            ActiveSheet.PivotTables("PivotTable1").AddDataField ActiveSheet.PivotTables( _
+                "PivotTable1").PivotFields("Color Actual Order Qty Pcs"), _
+                "Sum of Color Actual Order Qty Pcs", xlSum
+            ActiveSheet.PivotTables("PivotTable1").AddDataField ActiveSheet.PivotTables( _
+                "PivotTable1").PivotFields("Trim Actual Order Qty Pcs"), _
+                "Sum of Trim Actual Order Qty Pcs", xlSum
+            ActiveSheet.PivotTables("PivotTable1").AddDataField ActiveSheet.PivotTables( _
+                "PivotTable1").PivotFields("PO Actual Order Qty Pcs"), _
+                "Sum of PO Actual Order Qty Pcs", xlSum
+            ActiveWorkbook.ShowPivotTableFieldList = False
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Production Plan ID"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Plan/Year").Subtotals = _
+                Array(False, False, False, False, False, False, False, False, False, False, False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Season").Subtotals = Array( _
+                False, False, False, False, False, False, False, False, False, False, False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Item Brand").Subtotals = _
+                Array(False, False, False, False, False, False, False, False, False, False, False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Business Unit").Subtotals _
+                = Array(False, False, False, False, False, False, False, False, False, False, False, False _
+                )
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Item Code").Subtotals = _
+                Array(False, False, False, False, False, False, False, False, False, False, False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Item Name").Subtotals = _
+                Array(False, False, False, False, False, False, False, False, False, False, False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Main Sample Code"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Style Code").Subtotals = _
+                Array(False, False, False, False, False, False, False, False, False, False, False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Main Sample Name"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Supplier Raw Material Code" _
+                ).Subtotals = Array(False, False, False, False, False, False, False, False, False, False _
+                , False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Supplier Raw Material Name" _
+                ).Subtotals = Array(False, False, False, False, False, False, False, False, False, False _
+                , False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Vendor Code").Subtotals = _
+                Array(False, False, False, False, False, False, False, False, False, False, False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Vendor Name").Subtotals = _
+                Array(False, False, False, False, False, False, False, False, False, False, False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Management Factory Code"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Management Factory Name"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Branch Factory Code"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Branch Factory Name"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Raw Material Supplier Code" _
+                ).Subtotals = Array(False, False, False, False, False, False, False, False, False, False _
+                , False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Raw Material Supplier Name" _
+                ).Subtotals = Array(False, False, False, False, False, False, False, False, False, False _
+                , False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Sewing Difficulty"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Department Code"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Department Name"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Class1 Code").Subtotals = _
+                Array(False, False, False, False, False, False, False, False, False, False, False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Class1 Name").Subtotals = _
+                Array(False, False, False, False, False, False, False, False, False, False, False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Production Plan Type Name") _
+                .Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Month Week Flag"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Last Update Date"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Requested Wh Date"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Contracted Date"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Transport Method Name"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Logistics Type Name"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Order Qty Pcs").Subtotals _
+                = Array(False, False, False, False, False, False, False, False, False, False, False, False _
+                )
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Yarn Order Acceptance"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Yarn Order Request Date"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Yarn Order Answer Date"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Yarn Order Actual Date"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Yarn Order NO").Subtotals _
+                = Array(False, False, False, False, False, False, False, False, False, False, False, False _
+                )
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Yarn Actual Order Qty Pcs") _
+                .Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Yarn Update Date"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Fabric Order Acceptance"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Fabric Order Request Date") _
+                .Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Fabric Order Answer Date"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Fabric Order Actual Date"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Fabric Order NO"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields( _
+                "Fabric Actual Order Qty Pcs").Subtotals = Array(False, False, False, False, False, _
+                False, False, False, False, False, False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Fabric Update Date"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Color Order Acceptance"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Color Order Request Date"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Color Order Answer Date"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Color Order Actual Date"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Color Order NO").Subtotals _
+                = Array(False, False, False, False, False, False, False, False, False, False, False, False _
+                )
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Color Actual Order Qty Pcs" _
+                ).Subtotals = Array(False, False, False, False, False, False, False, False, False, False _
+                , False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Color Update Date"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Trim Order Acceptance"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Trim Order Request Date"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Trim Order Answer Date"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Trim Order Actual Date"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Trim Order NO").Subtotals _
+                = Array(False, False, False, False, False, False, False, False, False, False, False, False _
+                )
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Trim Actual Order Qty Pcs") _
+                .Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Trim Update Date"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("PO Order Acceptance"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("PO Order Request Date"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("PO Order Answer Date"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("PO Order Actual Date"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("PO Order NO").Subtotals = _
+                Array(False, False, False, False, False, False, False, False, False, False, False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("PO Actual Order Qty Pcs"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("PO Update Date").Subtotals _
+                = Array(False, False, False, False, False, False, False, False, False, False, False, False _
+                )
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Order Qty Pcs (Old)"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields( _
+                "Transport Method Name (Old)").Subtotals = Array(False, False, False, False, False, _
+                False, False, False, False, False, False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Logistics Type Name (Old)") _
+                .Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields( _
+                "Yarn Order Request Date (Old)").Subtotals = Array(False, False, False, False, _
+                False, False, False, False, False, False, False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields( _
+                "Fabric Order Request Date (Old)").Subtotals = Array(False, False, False, False, _
+                False, False, False, False, False, False, False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields( _
+                "Color Order Request Date (Old)").Subtotals = Array(False, False, False, False, _
+                False, False, False, False, False, False, False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields( _
+                "Trim Order Request Date (Old)").Subtotals = Array(False, False, False, False, _
+                False, False, False, False, False, False, False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields( _
+                "PO Order Request Date (Old)").Subtotals = Array(False, False, False, False, False, _
+                False, False, False, False, False, False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Status").Subtotals = Array( _
+                False, False, False, False, False, False, False, False, False, False, False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Display Month WK"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Display Month WK Column"). _
+                Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Group Cd").Subtotals = _
+                Array(False, False, False, False, False, False, False, False, False, False, False, False)
+            ActiveSheet.PivotTables("PivotTable1").RepeatAllLabels xlDoNotRepeatLabels
+            Range("A4").Select
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Display Month WK").Caption _
+                = "Month"
+            Range("C4").Select
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Main Sample Name").Caption _
+                = "Style Name"
+            Range("D4").Select
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Main Sample Code").Caption _
+                = "Sample Code"
+            Range("F4").Select
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Production Plan ID"). _
+                Caption = "Plan ID"
+            Range("G4").Select
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Business Unit").Caption = _
+                "BIZ"
+            Range("H4").Select
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Production Plan Type Name") _
+                .Caption = "Phase"
+            Range("I4").Select
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Contracted Date").Caption _
+                = "ETD"
+            Range("J4").Select
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Requested Wh Date"). _
+                Caption = "Wh Date"
+            Range("K4").Select
+            ActiveSheet.PivotTables("PivotTable1").DataPivotField.PivotItems( _
+                "Sum of Order Qty Pcs").Caption = "Order Qty"
+            Range("L4").Select
+            ActiveSheet.PivotTables("PivotTable1").DataPivotField.PivotItems( _
+                "Sum of Fabric Actual Order Qty Pcs").Caption = "Fabric"
+            Range("M4").Select
+            ActiveSheet.PivotTables("PivotTable1").DataPivotField.PivotItems( _
+                "Sum of Color Actual Order Qty Pcs").Caption = "Color"
+            Range("N4").Select
+            ActiveSheet.PivotTables("PivotTable1").DataPivotField.PivotItems( _
+                "Sum of Trim Actual Order Qty Pcs").Caption = "Trim"
+            Range("O4").Select
+            ActiveSheet.PivotTables("PivotTable1").DataPivotField.PivotItems( _
+                "Sum of PO Actual Order Qty Pcs").Caption = "PO"
+            Range("A4").Select
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Month").Subtotals = Array( _
+                True, False, False, False, False, False, False, False, False, False, False, False)
+            Range("C4").Select
+            ActiveSheet.PivotTables("PivotTable1").PivotFields("Style Name").Subtotals = _
+                Array(True, False, False, False, False, False, False, False, False, False, False, False)
+            ActiveSheet.PivotTables("PivotTable1").PivotSelect "'Style Name'[All;Total]", _
+                xlDataAndLabel, True
+            With Selection.Interior
+                .Pattern = xlSolid
+                .PatternColorIndex = xlAutomatic
+                .ThemeColor = xlThemeColorAccent4
+                .TintAndShade = 0.399975585192419
+                .PatternTintAndShade = 0
+            End With
+            Selection.Font.Bold = True
+            ActiveSheet.PivotTables("PivotTable1").PivotSelect "Month[All;Total]", _
+                xlDataAndLabel, True
+            With Selection.Interior
+                .Pattern = xlSolid
+                .PatternColorIndex = xlAutomatic
+                .Color = 5296274
+                .TintAndShade = 0
+                .PatternTintAndShade = 0
+            End With
+            ActiveSheet.PivotTables("PivotTable1").PivotSelect "", xlDataAndLabel, True
+            With ActiveSheet.PivotTables("PivotTable1").PivotFields("Month")
+                .PivotItems("(blank)").Visible = False
+            End With
+            ActiveSheet.PivotTables("PivotTable1").PivotSelect "", xlDataAndLabel, True
+            '--------Number Formating
+            Columns("K:O").NumberFormat = "_(* #,##0_);_(* (#,##0);_(* ""-""??_);_(@_)"
+            '--------------------------------------------------------------------------------
+            Selection.Columns.AutoFit
+            Selection.Borders(xlDiagonalDown).LineStyle = xlNone
+            Selection.Borders(xlDiagonalUp).LineStyle = xlNone
+            With Selection.Borders(xlEdgeLeft)
+                .LineStyle = xlContinuous
+                .ColorIndex = 0
+                .TintAndShade = 0
+                .Weight = xlThin
+            End With
+            With Selection.Borders(xlEdgeTop)
+                .LineStyle = xlContinuous
+                .ColorIndex = 0
+                .TintAndShade = 0
+                .Weight = xlThin
+            End With
+            With Selection.Borders(xlEdgeBottom)
+                .LineStyle = xlContinuous
+                .ColorIndex = 0
+                .TintAndShade = 0
+                .Weight = xlThin
+            End With
+            With Selection.Borders(xlEdgeRight)
+                .LineStyle = xlContinuous
+                .ColorIndex = 0
+                .TintAndShade = 0
+                .Weight = xlThin
+            End With
+            With Selection.Borders(xlInsideVertical)
+                .LineStyle = xlContinuous
+                .ColorIndex = 0
+                .TintAndShade = 0
+                .Weight = xlThin
+            End With
+            With Selection.Borders(xlInsideHorizontal)
+                .LineStyle = xlContinuous
+                .ColorIndex = 0
+                .TintAndShade = 0
+                .Weight = xlThin
+            End With
+            '------ Freezing
+            Range("C5").Select
+            ActiveWindow.FreezePanes = True
+            Columns("C:C").ColumnWidth = 30
+            Range("B5").Select
+            ActiveSheet.PivotTables("PivotTable1").PivotSelect "", xlDataAndLabel, True
+            'Pivot All In One End Here-----------------------------------------------------------------------------
+            '-------------
+            'Printing
+            Application.PrintCommunication = False
+            With ActiveSheet.PageSetup
+                .PrintTitleRows = "$4:$4"
+                .PrintTitleColumns = ""
+            End With
+            Application.PrintCommunication = True
+            ActiveSheet.PageSetup.PrintArea = ""
+            Application.PrintCommunication = False
+            With ActiveSheet.PageSetup
+                .LeftHeader = ""
+                .CenterHeader = "UQ-DEADLINE: &D"
+                .RightHeader = ""
+                .LeftFooter = ""
+                .CenterFooter = ""
+                .RightFooter = "Page: &P of &N"
+                .LeftMargin = Application.InchesToPoints(0.25)
+                .RightMargin = Application.InchesToPoints(0.25)
+                .TopMargin = Application.InchesToPoints(0.5)
+                .BottomMargin = Application.InchesToPoints(0.5)
+                .HeaderMargin = Application.InchesToPoints(0.3)
+                .FooterMargin = Application.InchesToPoints(0.3)
+                .PrintHeadings = False
+                .PrintGridlines = False
+                .PrintComments = xlPrintSheetEnd
+                .PrintQuality = 600
+                .CenterHorizontally = True
+                .CenterVertically = False
+                .Orientation = xlLandscape
+                .Draft = False
+                .PaperSize = xlPaperA4
+                .FirstPageNumber = xlAutomatic
+                .Order = xlDownThenOver
+                .BlackAndWhite = False
+                .Zoom = False
+                .FitToPagesWide = 1
+                .FitToPagesTall = False
+                .PrintErrors = xlPrintErrorsDisplayed
+                .OddAndEvenPagesHeaderFooter = False
+                .DifferentFirstPageHeaderFooter = False
+                .ScaleWithDocHeaderFooter = True
+                .AlignMarginsHeaderFooter = True
+                .EvenPage.LeftHeader.Text = ""
+                .EvenPage.CenterHeader.Text = ""
+                .EvenPage.RightHeader.Text = ""
+                .EvenPage.LeftFooter.Text = ""
+                .EvenPage.CenterFooter.Text = ""
+                .EvenPage.RightFooter.Text = ""
+                .FirstPage.LeftHeader.Text = ""
+                .FirstPage.CenterHeader.Text = ""
+                .FirstPage.RightHeader.Text = ""
+                .FirstPage.LeftFooter.Text = ""
+                .FirstPage.CenterFooter.Text = ""
+                .FirstPage.RightFooter.Text = ""
+            End With
+            Application.PrintCommunication = True
+            '---------------------------------------
+End Sub

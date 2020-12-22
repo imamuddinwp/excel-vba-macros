@@ -1,0 +1,9 @@
+Sub Delete_Fitered_Rows()
+
+'
+'
+'
+        ActiveSheet.AutoFilter.Range.Offset(1, 0).Rows.SpecialCells(xlCellTypeVisible).Delete (xlShiftUp)
+        ActiveSheet.ShowAllData
+        ActiveWorkbook.Save
+End Sub

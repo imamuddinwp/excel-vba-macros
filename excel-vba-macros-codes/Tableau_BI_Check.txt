@@ -1,0 +1,92 @@
+Sub Tableau_BI_Check()
+'
+' Macro2 Macro
+'
+
+'
+    Cells.Select
+    Selection.Borders(xlDiagonalDown).LineStyle = xlNone
+    Selection.Borders(xlDiagonalUp).LineStyle = xlNone
+    With Selection.Borders(xlEdgeLeft)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlThin
+    End With
+    With Selection.Borders(xlEdgeTop)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlThin
+    End With
+    With Selection.Borders(xlEdgeBottom)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlThin
+    End With
+    With Selection.Borders(xlEdgeRight)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlThin
+    End With
+    With Selection.Borders(xlInsideVertical)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlThin
+    End With
+    With Selection.Borders(xlInsideHorizontal)
+        .LineStyle = xlContinuous
+        .ColorIndex = 0
+        .TintAndShade = 0
+        .Weight = xlThin
+    End With
+    Selection.Columns.AutoFit
+    Columns("A:J").Select
+    Selection.Delete Shift:=xlToLeft
+    Columns("B:B").Select
+    Selection.Delete Shift:=xlToLeft
+    Columns("D:D").Select
+    Selection.Delete Shift:=xlToLeft
+    Columns("D:J").Select
+    Selection.Delete Shift:=xlToLeft
+    Range("D1").Select
+    Selection.AutoFilter
+    ActiveSheet.Range("$A$1:$I$600").AutoFilter Field:=4, Criteria1:=Array("=0.*", "=0", "=1"), Operator:=xlFilterValues
+    '----------
+    ActiveSheet.AutoFilter.Range.Offset(1, 0).Rows.SpecialCells(xlCellTypeVisible).Delete (xlShiftUp)
+    ActiveSheet.ShowAllData
+    '-----------------------------
+    Columns("H:H").Select
+    Selection.Cut
+    Columns("F:F").Select
+    Selection.Insert Shift:=xlToRight
+    Columns("H:H").Select
+    Selection.Cut
+    Columns("E:E").Select
+    Selection.Insert Shift:=xlToRight
+    Range("J1").Select
+    ActiveCell.FormulaR1C1 = "Cut"
+    Range("K1").Select
+    ActiveCell.FormulaR1C1 = "Sewing"
+    Range("L1").Select
+    ActiveCell.FormulaR1C1 = "Packing"
+    Range("M1").Select
+    ActiveCell.FormulaR1C1 = "Shipment"
+    Range("J2").Select
+    Application.CutCopyMode = False
+    ActiveCell.FormulaR1C1 = "=RC[-5]-RC[-4]"
+    Range("K2").Select
+    Application.CutCopyMode = False
+    ActiveCell.FormulaR1C1 = "=RC[-5]-RC[-4]"
+    Range("L2").Select
+    Application.CutCopyMode = False
+    ActiveCell.FormulaR1C1 = "=RC[-5]-RC[-4]"
+    Range("M2").Select
+    Application.CutCopyMode = False
+    ActiveCell.FormulaR1C1 = "=RC[-5]-RC[-4]"
+    Range("J2:K2").Select
+End Sub
+

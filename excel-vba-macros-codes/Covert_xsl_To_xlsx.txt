@@ -1,0 +1,67 @@
+Sub Covert_xsl_To_xlsx()
+
+'---
+'-----------------
+            Application.ScreenUpdating = False
+            Application.DisplayAlerts = False
+            
+            Dim OpenSourceFolder As Object
+            Dim OpenTargetFolder As Object
+            
+            Dim SelectedExcelFilesFolder As String
+            Dim SelectedXlsxFilesFolder As String
+            
+            Dim InputXlsFile As String
+            Dim MyOpenedXlsFile As Workbook
+            Dim ConvertedXlsxlFile As String
+            
+            
+            Set OpenSourceFolder = Application.FileDialog(msoFileDialogFolderPicker)
+            Set OpenTargetFolder = Application.FileDialog(msoFileDialogFolderPicker)
+            
+            'Select input data folder
+            MsgBox ("Select a  folder where  excel files are located")
+            Set OpenSourceFolder = Application.FileDialog(msoFileDialogFolderPicker)
+            
+            If OpenSourceFolder.Show = -1 Then
+            SelectedExcelFilesFolder = OpenSourceFolder.SelectedItems(1)
+            End If
+            
+            'Handle case when no input folder is selected
+            If SelectedExcelFilesFolder = "" Then
+            MsgBox "No input folder selected, code will exit"
+            Exit Sub
+            End If
+            
+            AppActivate Application.Caption
+            
+            'Select output folder
+            MsgBox ("Select a folder where output XLSX files will be saved")
+            If OpenTargetFolder.Show = -1 Then
+            SelectedXlsxFilesFolder = OpenTargetFolder.SelectedItems(1)
+            End If
+            
+            'Handle case when no output folder is selected
+            If SelectedXlsxFilesFolder = "" Then
+            MsgBox "No output folder selected, code will exit"
+            Exit Sub
+            End If
+            
+            'Looping through only xls files in input file folder
+            InputXlsFile = Dir(SelectedExcelFilesFolder & "\*.xls")
+            While InputXlsFile <> ""
+                      
+            Set MyOpenedXlsFile = Workbooks.Open(SelectedExcelFilesFolder & "\" & InputXlsFile)
+            ConvertedXlsxlFile = SelectedXlsxFilesFolder & "\" & Replace(ActiveWorkbook.Name, "xls", "xlsx")
+                
+            'Save each excel file as pdf file, the newly pdf file will be located where original excel file was located
+            ActiveWorkbook.SaveAs fileName:=ConvertedXlsxlFile, FileFormat:=xlOpenXMLWorkbook, CreateBackup:=False
+               
+            MyOpenedXlsFile.Close
+            InputXlsFile = Dir
+            Wend
+            '----Successful Message
+                MsgBox prompt:="Congratulations, Operation Successfull !!!" & vbNewLine & "-------------------------" & vbNewLine & "proudLy powered by" & vbNewLine & "Md.ImAmUdDiN" & vbNewLine & "https://about.me/imamcu07", _
+                Buttons:=vbInformation + vbMsgBoxHelpButton, _
+                Title:="Successful Message From Md.ImAmUdDiN "
+End Sub

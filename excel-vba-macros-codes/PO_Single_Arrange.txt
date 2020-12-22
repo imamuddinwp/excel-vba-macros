@@ -1,0 +1,504 @@
+Sub PO_Single_Arrange()
+'
+' Macro for running on multiple files in seleted folder.
+'
+' Imam Uddin;
+'
+'https://github.com/imamuddinwp
+'
+'
+    'Convert Excel'
+    Application.Run "PERSONAL.XLSB!Covert_xsl_To_xlsx"
+    '---------------------
+    
+    Dim xFd As FileDialog
+    Dim xFdItem As Variant
+    Dim xFileName As String
+    Set xFd = Application.FileDialog(msoFileDialogFolderPicker)
+    If xFd.Show = -1 Then
+        xFdItem = xFd.SelectedItems(1) & Application.PathSeparator
+        xFileName = Dir(xFdItem & "*.xls*")
+        Do While xFileName <> ""
+            With Workbooks.Open(xFdItem & xFileName)
+
+                  'Your All Codes Here
+                    Sheets("ExcelOut(PO)").Select
+                    Rows("1:1").Select
+                    Selection.Delete Shift:=xlUp
+                    '---
+                    Columns("AE:AE").Select
+                    Selection.Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
+                    Range("AE1").Select
+                    ActiveCell.FormulaR1C1 = "Sample Code"
+                    Range("AE2").Select
+                    ActiveCell.FormulaR1C1 = "=RIGHT(RC[-1],LEN(RC[-1])-2)"
+                    Range("AE2").Select
+                    ActiveCell.Offset(0, -1).Select
+                    Selection.End(xlDown).Select
+                    ActiveCell.Offset(0, 1).Select
+                    Range(Selection, Selection.End(xlUp)).Select
+                    Selection.FillDown
+                    '==================================================
+                    Sheets("ExcelOut(DO)").Select
+                    Rows("1:1").Select
+                    Selection.Delete Shift:=xlUp
+                    '-----
+                    Columns("B:B").Select
+                    Selection.Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
+                    Range("B1").Select
+                    ActiveCell.FormulaR1C1 = "Plan-ID"
+                    Range("B2").Select
+                    ActiveCell.FormulaR1C1 = "='ExcelOut(PO)'!R2C27"
+                    Range("B2").Select
+                    ActiveCell.Offset(0, -1).Select
+                    Selection.End(xlDown).Select
+                    ActiveCell.Offset(0, 1).Select
+                    Range(Selection, Selection.End(xlUp)).Select
+                    Selection.FillDown
+                    '--------
+                    Columns("C:C").Select
+                    Selection.Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
+                    Range("C1").Select
+                    ActiveCell.FormulaR1C1 = "Style Code"
+                    Range("C2").Select
+                    ActiveCell.FormulaR1C1 = "='ExcelOut(PO)'!R2C31"
+                    Range("C2").Select
+                    ActiveCell.Offset(0, -1).Select
+                    Selection.End(xlDown).Select
+                    ActiveCell.Offset(0, 1).Select
+                    Range(Selection, Selection.End(xlUp)).Select
+                    Selection.FillDown
+                    '--------
+                    Columns("D:D").Select
+                    Selection.Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
+                    Range("D1").Select
+                    ActiveCell.FormulaR1C1 = "BIZ"
+                    Range("D2").Select
+                    ActiveCell.FormulaR1C1 = "='ExcelOut(PO)'!R2C6"
+                    Range("D2").Select
+                    ActiveCell.Offset(0, -1).Select
+                    Selection.End(xlDown).Select
+                    ActiveCell.Offset(0, 1).Select
+                    Range(Selection, Selection.End(xlUp)).Select
+                    Selection.FillDown
+                    '--------
+                    Columns("AE:AE").Select
+                    Selection.Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
+                    Range("AE1").Select
+                    ActiveCell.FormulaR1C1 = "Color/Code"
+                    Range("AE2").Select
+                    Application.CutCopyMode = False
+                    ActiveCell.FormulaR1C1 = "=RC[-2]&""/""&RC[-1]"
+                    Range("AE2").Select
+                    ActiveCell.Offset(0, -1).Select
+                    Selection.End(xlDown).Select
+                    ActiveCell.Offset(0, 1).Select
+                    Range(Selection, Selection.End(xlUp)).Select
+                    Selection.FillDown
+                    '--------
+                    Columns("AJ:AJ").Select
+                    Selection.Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
+                    Range("AJ1").Select
+                    ActiveCell.FormulaR1C1 = "Actual Order Qty"
+                    Range("AJ2").Select
+                    Application.CutCopyMode = False
+                    ActiveCell.FormulaR1C1 = "=RC[-8]*RC[-1]"
+                    Range("AJ2").Select
+                    ActiveCell.Offset(0, -1).Select
+                    Selection.End(xlDown).Select
+                    ActiveCell.Offset(0, 1).Select
+                    Range(Selection, Selection.End(xlUp)).Select
+                    Selection.FillDown
+                    '--------
+                    'Pivot Part=======================================================
+                    Cells.Select
+                    Sheets.Add
+                    ActiveWorkbook.PivotCaches.Create(SourceType:=xlDatabase, SourceData:= _
+                        "ExcelOut(DO)!R1C1:R1048576C37", Version:=6).CreatePivotTable _
+                        TableDestination:="Sheet1!R3C1", TableName:="PivotTable1", DefaultVersion _
+                        :=6
+                    Sheets("Sheet1").Select
+                    Cells(3, 1).Select
+                    With ActiveSheet.PivotTables("PivotTable1")
+                        .ColumnGrand = True
+                        .HasAutoFormat = True
+                        .DisplayErrorString = False
+                        .DisplayNullString = True
+                        .EnableDrilldown = True
+                        .ErrorString = ""
+                        .MergeLabels = False
+                        .NullString = ""
+                        .PageFieldOrder = 2
+                        .PageFieldWrapCount = 0
+                        .PreserveFormatting = True
+                        .RowGrand = True
+                        .SaveData = True
+                        .PrintTitles = False
+                        .RepeatItemsOnEachPrintedPage = True
+                        .TotalsAnnotation = False
+                        .CompactRowIndent = 1
+                        .InGridDropZones = False
+                        .DisplayFieldCaptions = True
+                        .DisplayMemberPropertyTooltips = False
+                        .DisplayContextTooltips = True
+                        .ShowDrillIndicators = True
+                        .PrintDrillIndicators = False
+                        .AllowMultipleFilters = False
+                        .SortUsingCustomLists = True
+                        .FieldListSortAscending = False
+                        .ShowValuesRow = False
+                        .CalculatedMembersInFilters = False
+                        .RowAxisLayout xlCompactRow
+                    End With
+                    With ActiveSheet.PivotTables("PivotTable1").PivotCache
+                        .RefreshOnFileOpen = False
+                        .MissingItemsLimit = xlMissingItemsDefault
+                    End With
+                    ActiveSheet.PivotTables("PivotTable1").RepeatAllLabels xlRepeatLabels
+                    Sheets("Sheet1").Select
+                    With ActiveSheet.PivotTables("PivotTable1").PivotFields("Order No.")
+                        .Orientation = xlRowField
+                        .Position = 1
+                    End With
+                    With ActiveSheet.PivotTables("PivotTable1").PivotFields("Plan-ID")
+                        .Orientation = xlRowField
+                        .Position = 2
+                    End With
+                    With ActiveSheet.PivotTables("PivotTable1").PivotFields("Item")
+                        .Orientation = xlRowField
+                        .Position = 3
+                    End With
+                    With ActiveSheet.PivotTables("PivotTable1").PivotFields("Style Code")
+                        .Orientation = xlRowField
+                        .Position = 4
+                    End With
+                    With ActiveSheet.PivotTables("PivotTable1").PivotFields("BIZ")
+                        .Orientation = xlRowField
+                        .Position = 5
+                    End With
+                    With ActiveSheet.PivotTables("PivotTable1").PivotFields("Ship to Port")
+                        .Orientation = xlRowField
+                        .Position = 6
+                    End With
+                    With ActiveSheet.PivotTables("PivotTable1").PivotFields("Contracted ETD")
+                        .Orientation = xlRowField
+                        .Position = 7
+                    End With
+                    With ActiveSheet.PivotTables("PivotTable1").PivotFields("ETA WH")
+                        .Orientation = xlRowField
+                        .Position = 8
+                    End With
+                    With ActiveSheet.PivotTables("PivotTable1").PivotFields("Color/Code")
+                        .Orientation = xlRowField
+                        .Position = 9
+                    End With
+                    With ActiveSheet.PivotTables("PivotTable1").PivotFields("Set Code")
+                        .Orientation = xlRowField
+                        .Position = 10
+                    End With
+                    With ActiveSheet.PivotTables("PivotTable1").PivotFields("Size")
+                        .Orientation = xlColumnField
+                        .Position = 1
+                    End With
+                    ActiveSheet.PivotTables("PivotTable1").AddDataField ActiveSheet.PivotTables( _
+                        "PivotTable1").PivotFields("Actual Order Qty"), "Sum of Actual Order Qty", _
+                        xlSum
+                    Sheets("Sheet1").Name = "PO-SUMMARY"
+                    Range("G4").Select
+                    With ActiveSheet.PivotTables("PivotTable1")
+                        .InGridDropZones = True
+                        .RowAxisLayout xlTabularRow
+                    End With
+                    With ActiveSheet.PivotTables("PivotTable1").PivotFields("Order No.")
+                        .PivotItems("(blank)").Visible = False
+                    End With
+                    Range("C4").Select
+                    ActiveSheet.PivotTables("PivotTable1").PivotFields("Item").Caption = "Style"
+                    Range("G4").Select
+                    ActiveSheet.PivotTables("PivotTable1").PivotFields("Contracted ETD").Caption = _
+                        "ETD"
+                    Range("H4").Select
+                    ActiveSheet.PivotTables("PivotTable1").PivotFields("ETA WH").Caption = "Wh"
+                    Range("I4").Select
+                    ActiveSheet.PivotTables("PivotTable1").PivotFields("Color/Code").Caption = _
+                        "Clr/Code"
+                    Range("F4").Select
+                    ActiveSheet.PivotTables("PivotTable1").PivotFields("Order No.").Subtotals = _
+                        Array(False, False, False, False, False, False, False, False, False, False, False, False)
+                    ActiveSheet.PivotTables("PivotTable1").PivotFields("Plan-ID").Subtotals = Array _
+                        (False, False, False, False, False, False, False, False, False, False, False, False)
+                    ActiveSheet.PivotTables("PivotTable1").PivotFields("Style Code").Subtotals = _
+                        Array(False, False, False, False, False, False, False, False, False, False, False, False)
+                    ActiveSheet.PivotTables("PivotTable1").PivotFields("BIZ").Subtotals = Array( _
+                        False, False, False, False, False, False, False, False, False, False, False, False)
+                    ActiveSheet.PivotTables("PivotTable1").PivotFields("Revision No.").Subtotals = _
+                        Array(False, False, False, False, False, False, False, False, False, False, False, False)
+                    ActiveSheet.PivotTables("PivotTable1").PivotFields("DO No.").Subtotals = Array( _
+                        False, False, False, False, False, False, False, False, False, False, False, False)
+                    ActiveSheet.PivotTables("PivotTable1").PivotFields("Document Status"). _
+                        Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                        False, False)
+                    ActiveSheet.PivotTables("PivotTable1").PivotFields("Item Code").Subtotals = _
+                        Array(False, False, False, False, False, False, False, False, False, False, False, False)
+                    ActiveSheet.PivotTables("PivotTable1").PivotFields("Style").Subtotals = Array( _
+                        False, False, False, False, False, False, False, False, False, False, False, False)
+                    ActiveSheet.PivotTables("PivotTable1").PivotFields("Wh").Subtotals = Array( _
+                        False, False, False, False, False, False, False, False, False, False, False, False)
+                    ActiveSheet.PivotTables("PivotTable1").PivotFields("Transportation Method"). _
+                        Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                        False, False)
+                    ActiveSheet.PivotTables("PivotTable1").PivotFields("Ship to Port Code"). _
+                        Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                        False, False)
+                    ActiveSheet.PivotTables("PivotTable1").PivotFields("Ship to Port").Subtotals = _
+                        Array(False, False, False, False, False, False, False, False, False, False, False, False)
+                    ActiveSheet.PivotTables("PivotTable1").PivotFields("Warehouse").Subtotals = _
+                        Array(False, False, False, False, False, False, False, False, False, False, False, False)
+                    ActiveSheet.PivotTables("PivotTable1").PivotFields("Address").Subtotals = Array _
+                        (False, False, False, False, False, False, False, False, False, False, False, False)
+                    ActiveSheet.PivotTables("PivotTable1").PivotFields("Telephone").Subtotals = _
+                        Array(False, False, False, False, False, False, False, False, False, False, False, False)
+                    ActiveSheet.PivotTables("PivotTable1").PivotFields("Person in Charge"). _
+                        Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                        False, False)
+                    ActiveSheet.PivotTables("PivotTable1").PivotFields("Incoterms").Subtotals = _
+                        Array(False, False, False, False, False, False, False, False, False, False, False, False)
+                    ActiveSheet.PivotTables("PivotTable1").PivotFields("ETD").Subtotals = Array( _
+                        False, False, False, False, False, False, False, False, False, False, False, False)
+                    ActiveSheet.PivotTables("PivotTable1").PivotFields("Forwarder").Subtotals = _
+                        Array(False, False, False, False, False, False, False, False, False, False, False, False)
+                    ActiveSheet.PivotTables("PivotTable1").PivotFields("Vendor Code").Subtotals = _
+                        Array(False, False, False, False, False, False, False, False, False, False, False, False)
+                    ActiveSheet.PivotTables("PivotTable1").PivotFields("Vendor").Subtotals = Array( _
+                        False, False, False, False, False, False, False, False, False, False, False, False)
+                    ActiveSheet.PivotTables("PivotTable1").PivotFields("Management Factory Code"). _
+                        Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                        False, False)
+                    ActiveSheet.PivotTables("PivotTable1").PivotFields("Management Factory"). _
+                        Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                        False, False)
+                    ActiveSheet.PivotTables("PivotTable1").PivotFields("Branch Factory Code"). _
+                        Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                        False, False)
+                    ActiveSheet.PivotTables("PivotTable1").PivotFields("Branch Factory").Subtotals _
+                        = Array(False, False, False, False, False, False, False, False, False, False, False, False _
+                        )
+                    ActiveSheet.PivotTables("PivotTable1").PivotFields("Set Code").Subtotals = _
+                        Array(False, False, False, False, False, False, False, False, False, False, False, False)
+                    ActiveSheet.PivotTables("PivotTable1").PivotFields("Quantity").Subtotals = _
+                        Array(False, False, False, False, False, False, False, False, False, False, False, False)
+                    ActiveSheet.PivotTables("PivotTable1").PivotFields("Color Code").Subtotals = _
+                        Array(False, False, False, False, False, False, False, False, False, False, False, False)
+                    ActiveSheet.PivotTables("PivotTable1").PivotFields("Color").Subtotals = Array( _
+                        False, False, False, False, False, False, False, False, False, False, False, False)
+                    ActiveSheet.PivotTables("PivotTable1").PivotFields("Clr/Code").Subtotals = _
+                        Array(False, False, False, False, False, False, False, False, False, False, False, False)
+                    ActiveSheet.PivotTables("PivotTable1").PivotFields("Pattern Dimension Code"). _
+                        Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                        False, False)
+                    ActiveSheet.PivotTables("PivotTable1").PivotFields("Size Code").Subtotals = _
+                        Array(False, False, False, False, False, False, False, False, False, False, False, False)
+                    ActiveSheet.PivotTables("PivotTable1").PivotFields("Size").Subtotals = Array( _
+                        False, False, False, False, False, False, False, False, False, False, False, False)
+                    ActiveSheet.PivotTables("PivotTable1").PivotFields("Qty per Set").Subtotals = _
+                        Array(False, False, False, False, False, False, False, False, False, False, False, False)
+                    ActiveSheet.PivotTables("PivotTable1").PivotFields("Actual Order Qty"). _
+                        Subtotals = Array(False, False, False, False, False, False, False, False, False, False, _
+                        False, False)
+                    ActiveSheet.PivotTables("PivotTable1").PivotFields("Picking Unit").Subtotals = _
+                        Array(False, False, False, False, False, False, False, False, False, False, False, False)
+                    ActiveSheet.PivotTables("PivotTable1").PivotFields("Ship to Port").Subtotals = _
+                        Array(True, False, False, False, False, False, False, False, False, False, False, False)
+                    ActiveSheet.PivotTables("PivotTable1").PivotSelect "", xlDataAndLabel, True
+                    Selection.Columns.AutoFit
+                    Selection.Borders(xlDiagonalDown).LineStyle = xlNone
+                    Selection.Borders(xlDiagonalUp).LineStyle = xlNone
+                    With Selection.Borders(xlEdgeLeft)
+                        .LineStyle = xlContinuous
+                        .ColorIndex = 0
+                        .TintAndShade = 0
+                        .Weight = xlThin
+                    End With
+                    With Selection.Borders(xlEdgeTop)
+                        .LineStyle = xlContinuous
+                        .ColorIndex = 0
+                        .TintAndShade = 0
+                        .Weight = xlThin
+                    End With
+                    With Selection.Borders(xlEdgeBottom)
+                        .LineStyle = xlContinuous
+                        .ColorIndex = 0
+                        .TintAndShade = 0
+                        .Weight = xlThin
+                    End With
+                    With Selection.Borders(xlEdgeRight)
+                        .LineStyle = xlContinuous
+                        .ColorIndex = 0
+                        .TintAndShade = 0
+                        .Weight = xlThin
+                    End With
+                    With Selection.Borders(xlInsideVertical)
+                        .LineStyle = xlContinuous
+                        .ColorIndex = 0
+                        .TintAndShade = 0
+                        .Weight = xlThin
+                    End With
+                    With Selection.Borders(xlInsideHorizontal)
+                        .LineStyle = xlContinuous
+                        .ColorIndex = 0
+                        .TintAndShade = 0
+                        .Weight = xlThin
+                    End With
+                    ActiveSheet.PivotTables("PivotTable1").RepeatAllLabels xlDoNotRepeatLabels
+                    ActiveWorkbook.ShowPivotTableFieldList = False
+                    'Freeze Pane---------------
+                    Range("C5").Select
+                    ActiveWindow.FreezePanes = True
+                    ' Theme Color-------------------
+                    ActiveSheet.PivotTables("PivotTable1").PivotSelect "'Ship to Port'[All;Total]" _
+                        , xlDataAndLabel, True
+                    With Selection.Interior
+                        .Pattern = xlSolid
+                        .PatternColorIndex = xlAutomatic
+                        .ThemeColor = xlThemeColorAccent6
+                        .TintAndShade = 0
+                        .PatternTintAndShade = 0
+                    End With
+                    '-----
+                    'Printing Area
+                    Application.PrintCommunication = False
+                    With ActiveSheet.PageSetup
+                        .PrintTitleRows = ""
+                        .PrintTitleColumns = ""
+                    End With
+                    Application.PrintCommunication = True
+                    ActiveSheet.PageSetup.PrintArea = ""
+                    Application.PrintCommunication = False
+                    With ActiveSheet.PageSetup
+                        .LeftHeader = ""
+                        .CenterHeader = ""
+                        .RightHeader = ""
+                        .LeftFooter = ""
+                        .CenterFooter = ""
+                        .RightFooter = ""
+                        .LeftMargin = Application.InchesToPoints(0.2)
+                        .RightMargin = Application.InchesToPoints(0.2)
+                        .TopMargin = Application.InchesToPoints(0.5)
+                        .BottomMargin = Application.InchesToPoints(0.5)
+                        .HeaderMargin = Application.InchesToPoints(0.3)
+                        .FooterMargin = Application.InchesToPoints(0.3)
+                        .PrintHeadings = False
+                        .PrintGridlines = False
+                        .PrintComments = xlPrintNoComments
+                        .PrintQuality = 600
+                        .CenterHorizontally = True
+                        .CenterVertically = False
+                        .Orientation = xlLandscape
+                        .Draft = False
+                        .PaperSize = xlPaperA4
+                        .FirstPageNumber = xlAutomatic
+                        .Order = xlDownThenOver
+                        .BlackAndWhite = False
+                        .Zoom = False
+                        .FitToPagesWide = 1
+                        .FitToPagesTall = False
+                        .PrintErrors = xlPrintErrorsDisplayed
+                        .OddAndEvenPagesHeaderFooter = False
+                        .DifferentFirstPageHeaderFooter = False
+                        .ScaleWithDocHeaderFooter = True
+                        .AlignMarginsHeaderFooter = True
+                        .EvenPage.LeftHeader.Text = ""
+                        .EvenPage.CenterHeader.Text = ""
+                        .EvenPage.RightHeader.Text = ""
+                        .EvenPage.LeftFooter.Text = ""
+                        .EvenPage.CenterFooter.Text = ""
+                        .EvenPage.RightFooter.Text = ""
+                        .FirstPage.LeftHeader.Text = ""
+                        .FirstPage.CenterHeader.Text = ""
+                        .FirstPage.RightHeader.Text = ""
+                        .FirstPage.LeftFooter.Text = ""
+                        .FirstPage.CenterFooter.Text = ""
+                        .FirstPage.RightFooter.Text = ""
+                    End With
+                    Application.PrintCommunication = True
+                    Application.PrintCommunication = False
+                    With ActiveSheet.PageSetup
+                        .PrintTitleRows = ""
+                        .PrintTitleColumns = ""
+                    End With
+                    Application.PrintCommunication = True
+                    ActiveSheet.PageSetup.PrintArea = ""
+                    Application.PrintCommunication = False
+                    With ActiveSheet.PageSetup
+                        .LeftHeader = ""
+                        .CenterHeader = ""
+                        .RightHeader = ""
+                        .LeftFooter = ""
+                        .CenterFooter = ""
+                        .RightFooter = ""
+                        .LeftMargin = Application.InchesToPoints(0.2)
+                        .RightMargin = Application.InchesToPoints(0.2)
+                        .TopMargin = Application.InchesToPoints(0.5)
+                        .BottomMargin = Application.InchesToPoints(0.5)
+                        .HeaderMargin = Application.InchesToPoints(0.3)
+                        .FooterMargin = Application.InchesToPoints(0.3)
+                        .PrintHeadings = False
+                        .PrintGridlines = False
+                        .PrintComments = xlPrintNoComments
+                        .PrintQuality = 600
+                        .CenterHorizontally = True
+                        .CenterVertically = False
+                        .Orientation = xlLandscape
+                        .Draft = False
+                        .PaperSize = xlPaperA4
+                        .FirstPageNumber = xlAutomatic
+                        .Order = xlDownThenOver
+                        .BlackAndWhite = False
+                        .Zoom = False
+                        .FitToPagesWide = 1
+                        .FitToPagesTall = False
+                        .PrintErrors = xlPrintErrorsDisplayed
+                        .OddAndEvenPagesHeaderFooter = False
+                        .DifferentFirstPageHeaderFooter = False
+                        .ScaleWithDocHeaderFooter = True
+                        .AlignMarginsHeaderFooter = True
+                        .EvenPage.LeftHeader.Text = ""
+                        .EvenPage.CenterHeader.Text = ""
+                        .EvenPage.RightHeader.Text = ""
+                        .EvenPage.LeftFooter.Text = ""
+                        .EvenPage.CenterFooter.Text = ""
+                        .EvenPage.RightFooter.Text = ""
+                        .FirstPage.LeftHeader.Text = ""
+                        .FirstPage.CenterHeader.Text = ""
+                        .FirstPage.RightHeader.Text = ""
+                        .FirstPage.LeftFooter.Text = ""
+                        .FirstPage.CenterFooter.Text = ""
+                        .FirstPage.RightFooter.Text = ""
+                    End With
+                    Application.PrintCommunication = True
+                    '----
+                    Range("A1").Select
+                    ActiveCell.FormulaR1C1 = "Created On:"
+                    Range("B1").Select
+                    ActiveCell.FormulaR1C1 = "=TODAY()"
+                    Range("B1").Select
+                    Selection.Copy
+                    Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
+                        :=False, Transpose:=False
+                    Application.CutCopyMode = False
+                    ActiveWindow.ScrollColumn = 4
+                    ActiveWindow.ScrollColumn = 5
+                    ActiveWorkbook.Save
+                    ActiveWorkbook.Close
+                    '============================================
+                  'End Operation Here
+                '------------------------
+            End With
+            xFileName = Dir
+        Loop
+            '----Successful Message
+            MsgBox prompt:="Congratulations, Operation Successfull !!!" & vbNewLine & "-------------------------" & vbNewLine & "proudLy powered by" & vbNewLine & "Md.ImAmUdDiN" & vbNewLine & "https://about.me/imamcu07", _
+            Buttons:=vbInformation + vbMsgBoxHelpButton, _
+            Title:="Successful Message From Md.ImAmUdDiN "
+    End If
+End Sub

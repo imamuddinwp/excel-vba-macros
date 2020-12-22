@@ -1,0 +1,36 @@
+Sub DLS_To_PrdnRpt()
+'
+' Macro3 Macro
+'
+
+'
+    Sheets("SPLFM1001").Visible = True
+    Sheets("SPLFM1001").Select
+    Columns("B:D").Select
+    Selection.Delete Shift:=xlToLeft
+    Columns("C:D").Select
+    Selection.Delete Shift:=xlToLeft
+    Columns("D:D").Select
+    Selection.Copy
+    Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
+        :=False, Transpose:=False
+    Columns("C:C").Select
+    Application.CutCopyMode = False
+    Selection.Delete Shift:=xlToLeft
+    Columns("E:S").Select
+    Selection.Delete Shift:=xlToLeft
+    Columns("F:G").Select
+    Selection.Delete Shift:=xlToLeft
+    Columns("H:I").Select
+    Selection.Delete Shift:=xlToLeft
+    Columns("I:AN").Select
+    Selection.Delete Shift:=xlToLeft
+    Columns("K:T").Select
+    Selection.Delete Shift:=xlToLeft
+    Columns("L:AX").Select
+    Selection.Delete Shift:=xlToLeft
+    Columns("A:K").Select
+    Selection.Columns.AutoFit
+    Cells.Select
+    Selection.Copy
+End Sub

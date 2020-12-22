@@ -1,0 +1,111 @@
+Sub ETD_Check()
+'
+' Macro1 Macro
+'
+'
+
+
+    Sheets("SPLFM1001").Visible = True
+    Sheets("SPLFM1001").Select
+    Sheets("SPLFM1001").Copy After:=Workbooks("DLS-" & Format(Now(), "DD-MMM-YYYY") & ".xlsx").Sheets(8)
+    Sheets("SPLFM1001 (2)").Select
+    Sheets("SPLFM1001 (2)").Name = "RAW-Prev"
+    Sheets("SPLFM1001").Select
+    Sheets("SPLFM1001").Copy Before:=Sheets(9)
+    Sheets("SPLFM1001 (2)").Select
+    Sheets("SPLFM1001 (2)").Name = "Cur-RAW"
+    Range("AC1").Select
+    Columns("AC:AC").ColumnWidth = 8.29
+    Columns("AC:AC").EntireColumn.AutoFit
+    Columns("AD:AD").Select
+    Selection.ColumnWidth = 8.29
+    Columns("AD:AD").EntireColumn.AutoFit
+    Columns("AE:AE").Select
+    Selection.Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
+    Range("AE1").Select
+    ActiveCell.FormulaR1C1 = "Wh Prev"
+    Range("AE2").Select
+    Application.CutCopyMode = False
+    Application.CutCopyMode = False
+    ActiveCell.FormulaR1C1 = "=VLOOKUP(C[-30],'RAW-Prev'!C[-30]:C[-2],29,0)"
+    '---------------------------------------
+    ActiveCell.Offset(0, -1).Select
+    Selection.End(xlDown).Select
+    ActiveCell.Offset(0, 1).Select
+    Range(Selection, Selection.End(xlUp)).Select
+    Selection.FillDown
+    '----------------------------------------------------
+    Range("AE2:AE390").Select
+    Columns("AF:AF").Select
+    Selection.Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
+    Range("AF1").Select
+    ActiveCell.FormulaR1C1 = "ETD Prev"
+    Range("AF2").Select
+    Application.CutCopyMode = False
+    Application.CutCopyMode = False
+    ActiveCell.FormulaR1C1 = "=VLOOKUP(C[-31],'RAW-Prev'!C[-31]:C[-2],30,0)"
+    '---------------------------------------
+    ActiveCell.Offset(0, -1).Select
+    Selection.End(xlDown).Select
+    ActiveCell.Offset(0, 1).Select
+    Range(Selection, Selection.End(xlUp)).Select
+    Selection.FillDown
+    '----------------------------------------------------
+    Range("AF2:AF390").Select
+    Columns("AG:AG").Select
+    Selection.Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
+    Range("AG1").Select
+    ActiveCell.FormulaR1C1 = "Wh Change"
+    Range("AG2").Select
+    Application.CutCopyMode = False
+    ActiveCell.FormulaR1C1 = "=RC[-4]=RC[-2]"
+    '---------------------------------------
+    ActiveCell.Offset(0, -1).Select
+    Selection.End(xlDown).Select
+    ActiveCell.Offset(0, 1).Select
+    Range(Selection, Selection.End(xlUp)).Select
+    Selection.FillDown
+    '----------------------------------------------------
+    Range("AG2:AG390").Select
+    Columns("AH:AH").Select
+    Selection.Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
+    Range("AH1").Select
+    ActiveCell.FormulaR1C1 = "ETD Change"
+    Range("AH2").Select
+    Application.CutCopyMode = False
+    ActiveCell.FormulaR1C1 = "=RC[-4]=RC[-2]"
+    '---------------------------------------
+    ActiveCell.Offset(0, -1).Select
+    Selection.End(xlDown).Select
+    ActiveCell.Offset(0, 1).Select
+    Range(Selection, Selection.End(xlUp)).Select
+    Selection.FillDown
+    '----------------------------------------------------
+    Range("AH2:AH390").Select
+    Range("AH1").Select
+    Selection.AutoFilter
+    Range("AI1").Select
+    Sheets(Array("FW20-RAW", "SS21-RAW", "FW21-RAW", "SPLFM1001")).Select
+    Sheets("SPLFM1001").Activate
+    ActiveWindow.SelectedSheets.Visible = False
+    Sheets("RAW-Prev").Select
+    ActiveWindow.SelectedSheets.Visible = False
+    Sheets("Cur-RAW").Select
+    Sheets("Cur-RAW").Name = "ETD-Chnages"
+    ActiveWindow.ScrollWorkbookTabs Sheets:=-1
+    ActiveWindow.ScrollWorkbookTabs Sheets:=-1
+    Columns("AG:AH").Select
+    With Selection.Interior
+        .Pattern = xlSolid
+        .PatternColorIndex = xlAutomatic
+        .Color = 65535
+        .TintAndShade = 0
+        .PatternTintAndShade = 0
+    End With
+    With Selection.Font
+        .Color = -16776961
+        .TintAndShade = 0
+    End With
+    Sheets("FW-21").Select
+    ActiveWorkbook.Save
+End Sub
